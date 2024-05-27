@@ -1,8 +1,10 @@
 # Challenge de Mercado Libre
-Este repositorio contiene los archivos requeridos por el challenge de Mercado Libre. Las consignas pueden encontrarse en el archivo consignas_meli.pdf.
+Este repositorio contiene los archivos requeridos por el challenge de Mercado Libre. Las consignas pueden encontrarse en el archivo utils/consignas_meli.pdf.
 
 ## Diagrama de entidad-relación
 El Diagrama de entidad-relación consta de cuatro entidades relacionadas entre sí. Se estableció una nomenclatura tanto de las entidades como de los campos en inglés para evitar tildes, las cuales no son permitidas en nombres de tablas y campos de SQL. 
+
+![Diagrama de entidad-rrelación](utils/edr_diagram.png)
 
 ### Entidades
 #### Customers
