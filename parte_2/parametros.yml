@@ -1,4 +1,4 @@
-limit_api: 1
+limit_api: 50
 
 categorias:
   - Chromecast
