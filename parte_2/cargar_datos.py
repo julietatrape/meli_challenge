@@ -1,4 +1,4 @@
-from utilidades import MeliScrapper, desanidar_key
+from utilidades import MeliScrapper, desanidar_key, convertir_a_meses, extraer_generacion
 import logging
 import csv
 from datetime import date
@@ -43,9 +43,18 @@ with open('parte_2/data.csv', 'w', newline='') as csvfile:
         for id in ids_list:
             url = f"https://api.mercadolibre.com/items/{id}"
             respuesta = meli_data.api_get(url)
+            # Agregar la fecha de carga
             respuesta['fecha_de_carga'] = date.today()
+            # Desanidar campos necesarios
             desanidar_key(respuesta, 'sale_terms')
             desanidar_key(respuesta, 'attributes')
+            # Refinar campos necesarios
+            if 'meses_de_garantia' in meli_data.campos_necesarios and 'tiempo_de_garantia' in respuesta:
+                garantia_refinada = convertir_a_meses(respuesta['tiempo_de_garantia'])
+                respuesta['meses_de_garantia'] = garantia_refinada
+            if 'generacion' in meli_data.campos_necesarios and 'generacion' in respuesta:
+                generacion_refinada = extraer_generacion(respuesta['generacion'])
+                respuesta['generacion'] = generacion_refinada
             writer.writerow({key: respuesta.get(key, None) for key in meli_data.campos_necesarios})
     else:
         logging.warning("No fue posible extraer datos de la API.")

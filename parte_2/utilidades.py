@@ -58,7 +58,7 @@ def snakify(texto: str) -> str:
     """
     translation_table = str.maketrans('áéíóú', 'aeiou')
     texto_sin_acentos = texto.translate(translation_table)
-    texto_snake_case = texto_sin_acentos.replace(' ', '_').lower()
+    texto_snake_case = texto_sin_acentos.replace(' ', '_').replace('-','_').lower()
     return texto_snake_case
 
 
@@ -78,3 +78,25 @@ def desanidar_key(nombre_diccionario: dict, nombre_key: str) -> dict:
         clave_snake_case = snakify(clave)
         nombre_diccionario[clave_snake_case] = nombre_diccionario[nombre_key][i]['value_name']
     return nombre_diccionario
+
+
+
+def convertir_a_meses(periodo: str) -> str:
+    whitespace_index = periodo.find(" ")
+    if 'año' in periodo:
+        periodo_int = int(periodo[:whitespace_index])
+        periodo_meses = periodo_int * 12
+    if 'día' in periodo:
+        periodo_int = int(periodo[:whitespace_index])
+        periodo_meses = periodo_int // 30
+    if 'mes' in periodo:
+        periodo_int = int(periodo[:whitespace_index])
+        periodo_meses = periodo_int
+        
+    return periodo_meses
+
+
+def extraer_generacion(generacion: str) -> str:
+    generacion_refinada = generacion[0]
+    
+    return generacion_refinada

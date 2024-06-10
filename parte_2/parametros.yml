@@ -1,4 +1,4 @@
-limit_api: 5
+limit_api: 50
 
 categorias:
   - Chromecast
@@ -17,17 +17,20 @@ campos_necesarios:
   - currency_id
   - condition
   - accepts_mercadopago
-  - tiempo_de_garantia
+  - meses_de_garantia
   - facturacion
   - marca
+  - color
+  - generacion
   - condicion_del_item
   - modelo
+  - memoria_ram
+  - con_bluetooth
+  - con_wi_fi
   - status
   - date_created
   - last_updated
   - fecha_de_carga
-  - color
-  - test
 
 
 
