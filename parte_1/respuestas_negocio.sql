@@ -13,7 +13,7 @@ WHERE 1=1
 	AND EXTRACT(YEAR FROM o.order_date) = 2020
 	AND EXTRACT(MONTH FROM o.order_date) = 1
 GROUP BY 1,2,3
-HAVING COUNT(*) > 1500;
+HAVING COUNT(o.order_id) > 1500;
 
 
 -- Por cada mes del 2020, se solicita el top 5 de usuarios que más 
@@ -26,7 +26,7 @@ WITH sells AS (
         ,EXTRACT(YEAR FROM o.order_date) AS year
         ,c.name
 		,c.surname
-		,COUNT(*) AS total_sells
+		,COUNT(o.order_id) AS total_sells
 		,SUM(i.price) AS total_earn
 	FROM customers c
 		LEFT JOIN orders o
@@ -41,7 +41,7 @@ WITH sells AS (
 		AND ct.name = 'Celulares'
 	GROUP BY 1,2,3,4)
 
-	,sells_refined AS (
+,sells_refined AS (
 	SELECT 
 		month
         ,year
@@ -66,7 +66,6 @@ ORDER BY month, row_num;
 -- Tener en cuenta que debe ser reprocesable. Vale resaltar que en la tabla Item,
 -- vamos a tener únicamente el último estado informado por la PK definida. (Se puede
 -- resolver a través de StoredProcedure)
-
 CREATE OR REPLACE PROCEDURE load_price_control (start_date DATE, end_date DATE)
 LANGUAGE plpgsql
 AS $$
@@ -106,7 +105,6 @@ BEGIN
 END;
 $$;
 
-       select * from items;
 -- Luego podemos correr el Stored Proccedure con las fechas deseadas
 -- ya sea para carga inicial (donde start_date = end_date = CURRENT_DATE)
 -- o reproceso de lo datos (donde podemos seleccionar las fechas deseadas)

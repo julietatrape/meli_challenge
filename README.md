@@ -6,7 +6,7 @@ Este repositorio contiene los archivos requeridos por el challenge de Mercado Li
 Todos los archivos correspondientes a la primera parte del challenge se encuentran en la carpeta *parte_1*.
 
 ### Diagrama de entidad-relación
-El Diagrama de entidad-relación consta de cuatro entidades relacionadas entre sí. Se estableció una nomenclatura tanto de las entidades como de los campos en inglés para evitar tildes, las cuales no son permitidas en nombres de tablas y campos de SQL. 
+El Diagrama de entidad-relación consta de cuatro entidades relacionadas entre sí. 
 
 ![Diagrama de entidad-rrelación](utils/edr_diagram.png)
 
@@ -69,34 +69,13 @@ Finalmente, la relación entre las tablas “customers” y “orders” es 1:n 
 NOTA: en este caso fue posible establecer una relación entre la tabla “customers” y la tabla “orders” ya que las queries analíticas sólo requieren información sobre los vendedores. Sin embargo, sería recomendable separar la tabla “customers” en dos tablas: una para vendedores y otra para compradores. A su vez, eliminar el campo “customer_id” de la tabla orders y reemplazarlo por dos nuevos campos “buyer_id” y “seller_id”.
 Como probablemente en el futuro se va a requerir hacer analítica sobre los compradores, sería una buena práctica hacer el diseño así desde el principio para evitar reprocesar datos.
 
-### Posibles adiciones si se implementa en BigQuery
-#### Partitioning
+
+**Clustering y partitioning**
 Dado que las queries de análisis utilizan filtros de fecha, podría ser aconsejable el uso de particiones de acuerdo a las columnas de fechas de cada tabla. Esto, dependiendo del volumen de datos y por lo tanto de la cantidad de particiones generadas, podría mejorar la performance de las queries.
-Teniendo en cuenta las queries analizadas, podría considerarse:
-Particionar la tabla customers por el campo date_of_birth, ya que las queries filtran según la fecha de nacimiento de los usuarios.
-Particionar la tabla orders por el campo order_date, ya que las queries filtran según la fecha en que se realizaron transacciones.
 
-#### Clustering
-También se podría considerar realizar clustering en algunas de las tablas para mejorar la performance de las queries. Una buena práctica podría ser utilizar como campos de clustering aquellos que participan en los joins entre las tablas, es decir:
-
-Tabla
-Campo de clustering
-customers
-customer_id
-orders
-seller_id, order_id
-items
-category_id, item_id
-orders_details
-order_id, item_id
-categories
-category_id
+También se podría considerar realizar clustering en algunas de las tablas para mejorar la performance de las queries. Una buena práctica podría ser utilizar como campos de clustering aquellos que participan en los joins entre las tablas.
 
 
-#### BI Engine
-La documentación del challenge dice que la tabla “items” es muy grande debido a que se encuentran todos los productos que en algún momento fueron publicados. Asumo que también la tabla “orders” podría ser muy voluminosa dado que allí se almacena cada transacción realizada. También la tabla “orders_details” podría tener gran volumen ya que almacena las transacciones con mayor granularidad. Esto puede ocasionar que si las queries analíticas requieren de joins que involucren estas tablas, dichas queries sean lentas.
-Para estas situaciones BigQuery cuenta con un producto que cachea ciertos datos en memoria y así acelera queries que involucran esos datos. El BI Engine de BigQuery permite establecer ciertas tablas como “tablas prioritarias” para almacenar sus datos en el caché.
-Este producto tiene un costo adicional y el mismo depende del volumen de datos almacenados en el caché y del tiempo de almacenamiento de los mismos. Sin embargo, puede ser muy útil cuando se necesita acelerar una consulta o disminuir el tiempo de carga de una visualización.
 
 
 

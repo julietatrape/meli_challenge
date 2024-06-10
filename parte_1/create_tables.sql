@@ -37,6 +37,3 @@ CREATE TABLE IF NOT EXISTS orders(
 	FOREIGN KEY(customer_id) REFERENCES customers(customer_id),
     FOREIGN KEY(item_id) REFERENCES items(item_id)
 );
-
-
-
