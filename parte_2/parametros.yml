@@ -1,0 +1,32 @@
+limit_api: 1
+
+categorias:
+  - Chromecast
+  - Google Home
+  - Apple TV
+  - Amazon Fire TV
+
+campos_necesarios:
+  - id
+  - site_id
+  - title
+  - seller_id
+  - category_id
+  - official_store_id
+  - price
+  - currency_id
+  - condition
+  - accepts_mercadopago
+  - tiempo_de_garantia
+  - facturacion
+  - marca
+  - condicion_del_item
+  - modelo
+  - status
+  - date_created
+  - last_updated
+  - fecha_de_carga
+
+
+
+  
