@@ -66,11 +66,12 @@ Como el enunciado menciona que no se utilizan carritos de compra, sino que cada 
 Por otro lado, la relación entre las tablas “categories” e “items” es 1:n ya que una categoría puede contener varios productos, pero un producto solo pertenecerá a una categoría.
 Finalmente, la relación entre las tablas “customers” y “orders” es 1:n ya que un vendedor puede ejecutar más de una orden, pero una orden debe ser ejecutada por un solo vendedor.
 
-NOTA: en este caso fue posible establecer una relación entre la tabla “customers” y la tabla “orders” ya que las queries analíticas sólo requieren información sobre los vendedores. Sin embargo, sería recomendable separar la tabla “customers” en dos tablas: una para vendedores y otra para compradores. A su vez, eliminar el campo “customer_id” de la tabla orders y reemplazarlo por dos nuevos campos “buyer_id” y “seller_id”.
+*NOTA:* en este caso fue posible establecer una relación entre la tabla “customers” y la tabla “orders” ya que las queries analíticas sólo requieren información sobre los vendedores. Sin embargo, sería recomendable separar la tabla “customers” en dos tablas: una para vendedores y otra para compradores. A su vez, eliminar el campo “customer_id” de la tabla orders y reemplazarlo por dos nuevos campos “buyer_id” y “seller_id”.
 Como probablemente en el futuro se va a requerir hacer analítica sobre los compradores, sería una buena práctica hacer el diseño así desde el principio para evitar reprocesar datos.
 
 
 **Clustering y partitioning**
+
 Dado que las queries de análisis utilizan filtros de fecha, podría ser aconsejable el uso de particiones de acuerdo a las columnas de fechas de cada tabla. Esto, dependiendo del volumen de datos y por lo tanto de la cantidad de particiones generadas, podría mejorar la performance de las queries.
 
 También se podría considerar realizar clustering en algunas de las tablas para mejorar la performance de las queries. Una buena práctica podría ser utilizar como campos de clustering aquellos que participan en los joins entre las tablas.
