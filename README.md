@@ -3,6 +3,8 @@ Este repositorio contiene los archivos requeridos por el challenge de Mercado Li
 
 
 ## Primera parte
+Todos los archivos correspondientes a la primera parte del challenge se encuentran en la carpeta *parte_1*.
+
 ### Diagrama de entidad-relación
 El Diagrama de entidad-relación consta de cuatro entidades relacionadas entre sí. Se estableció una nomenclatura tanto de las entidades como de los campos en inglés para evitar tildes, las cuales no son permitidas en nombres de tablas y campos de SQL. 
 
@@ -98,3 +100,19 @@ Este producto tiene un costo adicional y el mismo depende del volumen de datos a
 
 
 
+## Segunda parte
+
+Todos los archivos correspondientes a la segunda parte del challenge se encuentran en la carpeta *parte_2*.
+
+### Requisitos
+Luego de clonar el repositorio, deben instalarse las librerías de Python necesarias utilizando la siguiente línea de código:
+```
+pip install -r utils/requirements.txt
+```
+Al correr los scripts se creará un archivo llamado *run_history.log* que almacena los logs desde la primera corrida. 
+
+### Archivo parametros.yml
+Desde este archivo se podrán gestionar distintos parámetros tales como la cantidad de ítems a obtener en el llamado de la API, la categorías que se quieren analizar y los campos que deseamos que contenga el csv generado. Luego, los scripts de la carga de datos llamarán a los parámetros de *parametros.yaml* sin necesidad de hardcodear dichas variables. Esto permite modificar rápidamente los valores de los parámetros en caso de ser necesario.
+
+### Archivos de ingesta
+La creación del csv está separada en dos scripts de ingesta: el archivo *utilidades.py* almacena métodos y atributos que serán útiles a la hora de realizar la ingesta mientras que en el archivo *cargar_datos.py* se realiza la ingesta propiamente dicha. Este último se encargará de realizar los llamados a la API y generar un archivo llamado *data.csv* dentro de la carpeta *parte_2*.
