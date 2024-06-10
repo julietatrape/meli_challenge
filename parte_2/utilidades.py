@@ -10,7 +10,6 @@ class MeliScrapper():
         logging.basicConfig(level=logging.DEBUG,
             format='%(asctime)s [%(levelname)s] %(message)s',
             handlers=[
-                logging.FileHandler('parte_2/run_last.log', 'w+'),
                 logging.FileHandler('parte_2/run_history.log', 'a'),
                 logging.StreamHandler()
             ])

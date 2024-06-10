@@ -1,4 +1,4 @@
-limit_api: 50
+limit_api: 5
 
 categorias:
   - Chromecast
@@ -26,6 +26,8 @@ campos_necesarios:
   - date_created
   - last_updated
   - fecha_de_carga
+  - color
+  - test
 
 
 
