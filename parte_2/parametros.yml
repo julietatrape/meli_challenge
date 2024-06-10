@@ -32,6 +32,8 @@ campos_necesarios:
   - last_updated
   - fecha_de_carga
 
-
+campos_a_desanidar:
+  - sale_terms
+  - attributes
 
   
