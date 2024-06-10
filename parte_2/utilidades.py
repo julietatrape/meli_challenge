@@ -82,7 +82,16 @@ def desanidar_key(nombre_diccionario: dict, nombre_key: str) -> dict:
 
 
 
-def convertir_a_meses(periodo: str) -> str:
+def convertir_a_meses(periodo: str) -> int:
+    """Toma un string con un periodo en días, meses o años y devuelve un entero
+    que representa la cantidad de meses del periodo dado.
+        
+    Args:
+        periodo: string con un periodo en días, meses o años.
+
+    Returns:
+        entero que representa la cantidad de meses correspondientes al periodo.
+    """
     whitespace_index = periodo.find(" ")
     if 'año' in periodo:
         periodo_int = int(periodo[:whitespace_index])
@@ -97,7 +106,15 @@ def convertir_a_meses(periodo: str) -> str:
     return periodo_meses
 
 
-def extraer_generacion(generacion: str) -> str:
+def extraer_generacion(generacion: str) -> int:
+    """Extrae únicamente el valor numérico de la generación del ítem.
+        
+    Args:
+        generacion: string con la generación del ítem.
+
+    Returns:
+        entero que representa la generación del ítem.
+    """
     generacion_refinada = generacion[0]
     
     return generacion_refinada

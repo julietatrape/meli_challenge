@@ -78,8 +78,6 @@ También se podría considerar realizar clustering en algunas de las tablas para
 
 
 
-
-
 ## Segunda parte
 
 Todos los archivos correspondientes a la segunda parte del challenge se encuentran en la carpeta *parte_2*.
