@@ -1,13 +1,15 @@
 # Challenge de Mercado Libre
 Este repositorio contiene los archivos requeridos por el challenge de Mercado Libre. Las consignas pueden encontrarse en el archivo utils/consignas_meli.pdf.
 
-## Diagrama de entidad-relación
+
+## Primera parte
+### Diagrama de entidad-relación
 El Diagrama de entidad-relación consta de cuatro entidades relacionadas entre sí. Se estableció una nomenclatura tanto de las entidades como de los campos en inglés para evitar tildes, las cuales no son permitidas en nombres de tablas y campos de SQL. 
 
 ![Diagrama de entidad-rrelación](utils/edr_diagram.png)
 
-### Entidades
-#### Customers
+#### Entidades
+##### Customers
 Almacena datos de todos los usuarios, ya sean compradores o vendedores. Su clave primaria es el campo customer_id. 
 
 | **Campo**        | **Tipo de dato** | **Descripción**                                               |
@@ -22,7 +24,7 @@ Almacena datos de todos los usuarios, ya sean compradores o vendedores. Su clave
 | date_of_birth    | date             | Fecha de nacimiento del usuario.                              |
 | phone            | varchar          | Número de teléfono del usuario.                               |
 
-#### Orders
+##### Orders
 Almacena datos de todas las órdenes realizadas, considerando que cada ítem pertenece a una orden distinta (no contempla carritos de compra). No se incluyó un campo de cantidad de ítems por esta misma razón.
 
 | **Campo**     | **Tipo de dato** | **Descripción**                   |
@@ -32,7 +34,7 @@ Almacena datos de todas las órdenes realizadas, considerando que cada ítem per
 | order_date    | date             | Fecha en que se realizó la orden. |
 | item_id       | int              | ID del ítem que se compró.        |
 
-#### Items
+##### Items
 Almacena datos de todos los productos publicados en el marketplace, incluyendo aquellos que no están disponibles en la actualidad.
 
 | **Campo**            | **Tipo de dato** | **Descripción**                                                                                 |
@@ -45,7 +47,7 @@ Almacena datos de todos los productos publicados en el marketplace, incluyendo a
 | discontinuation_date | date             | Fecha de baja del producto, si es que aplica. Si no aplica este campo será nulo.                |
 | category_id          | int              | ID de la categoría del producto.                                                                |
 
-#### Categories
+##### Categories
 Almacena datos de todas las categorías del marketplace.
 
 | **Campo**        | **Tipo de dato** | **Descripción**              |
@@ -57,7 +59,7 @@ Almacena datos de todas las categorías del marketplace.
 
 
 
-### Relaciones
+#### Relaciones
 Como el enunciado menciona que no se utilizan carritos de compra, sino que cada ítem se considera como una orden separada se estableció una relación 1:n entre la tabla “items” y la tabla “orders”. Esto implica que una compra puede tener un solo ítem, pero un ítem puede estar incluído en más de una compra.
 Por otro lado, la relación entre las tablas “categories” e “items” es 1:n ya que una categoría puede contener varios productos, pero un producto solo pertenecerá a una categoría.
 Finalmente, la relación entre las tablas “customers” y “orders” es 1:n ya que un vendedor puede ejecutar más de una orden, pero una orden debe ser ejecutada por un solo vendedor.
@@ -65,14 +67,14 @@ Finalmente, la relación entre las tablas “customers” y “orders” es 1:n 
 NOTA: en este caso fue posible establecer una relación entre la tabla “customers” y la tabla “orders” ya que las queries analíticas sólo requieren información sobre los vendedores. Sin embargo, sería recomendable separar la tabla “customers” en dos tablas: una para vendedores y otra para compradores. A su vez, eliminar el campo “customer_id” de la tabla orders y reemplazarlo por dos nuevos campos “buyer_id” y “seller_id”.
 Como probablemente en el futuro se va a requerir hacer analítica sobre los compradores, sería una buena práctica hacer el diseño así desde el principio para evitar reprocesar datos.
 
-## Posibles adiciones si se implementa en BigQuery
-### Partitioning
+### Posibles adiciones si se implementa en BigQuery
+#### Partitioning
 Dado que las queries de análisis utilizan filtros de fecha, podría ser aconsejable el uso de particiones de acuerdo a las columnas de fechas de cada tabla. Esto, dependiendo del volumen de datos y por lo tanto de la cantidad de particiones generadas, podría mejorar la performance de las queries.
 Teniendo en cuenta las queries analizadas, podría considerarse:
 Particionar la tabla customers por el campo date_of_birth, ya que las queries filtran según la fecha de nacimiento de los usuarios.
 Particionar la tabla orders por el campo order_date, ya que las queries filtran según la fecha en que se realizaron transacciones.
 
-### Clustering
+#### Clustering
 También se podría considerar realizar clustering en algunas de las tablas para mejorar la performance de las queries. Una buena práctica podría ser utilizar como campos de clustering aquellos que participan en los joins entre las tablas, es decir:
 
 Tabla
@@ -89,7 +91,7 @@ categories
 category_id
 
 
-### BI Engine
+#### BI Engine
 La documentación del challenge dice que la tabla “items” es muy grande debido a que se encuentran todos los productos que en algún momento fueron publicados. Asumo que también la tabla “orders” podría ser muy voluminosa dado que allí se almacena cada transacción realizada. También la tabla “orders_details” podría tener gran volumen ya que almacena las transacciones con mayor granularidad. Esto puede ocasionar que si las queries analíticas requieren de joins que involucren estas tablas, dichas queries sean lentas.
 Para estas situaciones BigQuery cuenta con un producto que cachea ciertos datos en memoria y así acelera queries que involucran esos datos. El BI Engine de BigQuery permite establecer ciertas tablas como “tablas prioritarias” para almacenar sus datos en el caché.
 Este producto tiene un costo adicional y el mismo depende del volumen de datos almacenados en el caché y del tiempo de almacenamiento de los mismos. Sin embargo, puede ser muy útil cuando se necesita acelerar una consulta o disminuir el tiempo de carga de una visualización.
