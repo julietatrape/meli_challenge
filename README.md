@@ -70,7 +70,7 @@ Finalmente, la relación entre las tablas “customers” y “orders” es 1:n 
 Como probablemente en el futuro se va a requerir hacer analítica sobre los compradores, sería una buena práctica hacer el diseño así desde el principio para evitar reprocesar datos.
 
 
-#### Clustering y partitioning
+**Clustering y partitioning**
 
 Dado que las queries de análisis utilizan filtros de fecha, podría ser aconsejable el uso de particiones de acuerdo a las columnas de fechas de cada tabla. Esto, dependiendo del volumen de datos y por lo tanto de la cantidad de particiones generadas, podría mejorar la performance de las queries.
 
