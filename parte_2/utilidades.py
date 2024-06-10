@@ -21,6 +21,7 @@ class MeliScrapper():
         self.limit_api = variables_dict["limit_api"]
         self.categorias = variables_dict["categorias"]
         self.campos_necesarios = variables_dict["campos_necesarios"]
+        self.campos_a_desanidar = variables_dict["campos_a_desanidar"]
 
 
     def api_get(self, url: str) -> dict:

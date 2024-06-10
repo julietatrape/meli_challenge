@@ -1,5 +1,5 @@
 # Challenge de Mercado Libre
-Este repositorio contiene los archivos requeridos por el challenge de Mercado Libre. Las consignas pueden encontrarse en el archivo utils/consignas_meli.pdf.
+Este repositorio contiene los archivos requeridos por el challenge de Mercado Libre. Las consignas pueden encontrarse en el archivo utils/consignas.pdf.
 
 
 ## Primera parte
